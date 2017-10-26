@@ -1,0 +1,2 @@
+* About
+[[http://viewsourcecode.org/snaptoken/kilo/][Build Your Own Text Editor]]
