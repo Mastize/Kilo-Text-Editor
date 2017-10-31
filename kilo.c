@@ -227,7 +227,8 @@ void abFree(struct abuf *ab) {
 void editorDrawRows(struct abuf *ab) {
     int y;
     for (y = 0; y < E.screenrows; y++) {
-        abAppend(ab, "\x1b[K", 3);
+        // pending for tab bug
+        //abAppend(ab, "\x1b[K", 3);
         if (y >= E.numrows) {
             if (E.numrows == 0 && y == E.screenrows / 3) {
                 char welcome[80];
@@ -250,7 +251,7 @@ void editorDrawRows(struct abuf *ab) {
             abAppend(ab, E.row[y].chars, len);
         }
 
-        //abAppend(ab, "\x1b[K", 3);
+        abAppend(ab, "\x1b[K", 3);
         if (y < E.screenrows - 1) {
             abAppend(ab, "\r\n", 2);
         }
