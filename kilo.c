@@ -206,6 +206,7 @@ int editorReadKey() {
     }
 }
 
+// multi return value
 int getCursorPosition(int *rows, int *cols) {
     char buf[32];
     unsigned int i = 0;
@@ -253,6 +254,7 @@ void editorUpdateSyntax(erow *row) {
 
     char **keywords = E.syntax->keywords;
 
+    // use alias to make code more readable
     char *scs = E.syntax->singleline_comment_start;
     char *mcs = E.syntax->multiline_comment_start;
     char *mce = E.syntax->multiline_comment_end;
