@@ -85,6 +85,7 @@ struct editorConfig {
     int numrows;
     erow *row;
     int dirty;
+    int linenum_indent;
     char *filename;
     char statusmsg[80];
     time_t statusmsg_time;
@@ -772,6 +773,18 @@ void editorDrawRows(struct abuf *ab) {
     int y;
     for (y = 0; y < E.screenrows; y++) {
         int filerow = y + E.rowoff;
+
+        //draw line number
+        char format[8];
+        char linenum[E.linenum_indent + 1];
+        snprintf(format, 5, "%%%dd ", E.linenum_indent - 1);
+        if (filerow == E.numrows) {
+            snprintf(linenum, E.linenum_indent + 1, format, E.row[filerow - 1].idx + 2);
+        } else {
+            snprintf(linenum, E.linenum_indent + 1, format, E.row[filerow].idx + 1);
+        }
+        abAppend(ab, linenum, E.linenum_indent);
+
         if (filerow >= E.numrows) {
             if (E.numrows == 0 && y == E.screenrows / 3) {
                 char welcome[80];
@@ -880,7 +893,7 @@ void editorRefreshScreen() {
     editorDrawMessageBar(&ab);
 
     char buf[32];
-    snprintf(buf, sizeof(buf), "\x1b[%d;%dH", E.cy - E.rowoff + 1, E.rx - E.coloff + 1);
+    snprintf(buf, sizeof(buf), "\x1b[%d;%dH", E.cy - E.rowoff + 1, E.rx - E.coloff + 1 + E.linenum_indent);
     abAppend(&ab, buf, strlen(buf));
 
     abAppend(&ab, "\x1b[?25h", 6);
@@ -1069,9 +1082,11 @@ void initEditor() {
     E.statusmsg[0] = '\0';
     E.statusmsg_time = 0;
     E.syntax = NULL;
+    E.linenum_indent = 6;
 
     if (getWindowSize(&E.screenrows, &E.screencols) == -1) die("getWindowSize");
     E.screenrows -= 2;
+    E.screencols -= E.linenum_indent;
 }
 
 int main(int argc, char *argv[]) {
