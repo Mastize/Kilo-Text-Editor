@@ -1,2 +1,5 @@
 * About
+
+[[https://github.com/Mastize/Kilo-Text-Editor/blob/master/editor.png]]
+
 [[http://viewsourcecode.org/snaptoken/kilo/][Build Your Own Text Editor]]
