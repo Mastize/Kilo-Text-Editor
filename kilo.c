@@ -82,6 +82,7 @@ struct editorConfig {
     int rowoff;
     int screenrows;
     int screencols;
+    int raw_screencols;
     int numrows;
     erow *row;
     int dirty;
@@ -771,17 +772,17 @@ void editorScroll() {
 
 void editorDrawRows(struct abuf *ab) {
     int y;
+
     for (y = 0; y < E.screenrows; y++) {
         int filerow = y + E.rowoff;
 
         //draw line number
         char format[8];
         char linenum[E.linenum_indent + 1];
+        memset(linenum, ' ', E.linenum_indent);
         snprintf(format, 5, "%%%dd ", E.linenum_indent - 1);
-        if (filerow == E.numrows) {
-            snprintf(linenum, E.linenum_indent + 1, format, E.row[filerow - 1].idx + 2);
-        } else {
-            snprintf(linenum, E.linenum_indent + 1, format, E.row[filerow].idx + 1);
+        if (filerow < E.numrows) {
+            snprintf(linenum, E.linenum_indent + 1, format, filerow + 1);
         }
         abAppend(ab, linenum, E.linenum_indent);
 
@@ -879,7 +880,27 @@ void editorDrawMessageBar(struct abuf *ab) {
     }
 }
 
+void editorUpdateLinenumIndent() {
+    int digit;
+    int numrows = E.numrows;
+
+    if (numrows == 0) {
+        digit = 0;
+        E.linenum_indent = 2;
+        return;
+    }
+
+    digit = 1;
+    while (numrows >= 10) {
+        numrows = numrows / 10;
+        digit++;
+    }
+    E.linenum_indent = digit + 2;
+}
+
 void editorRefreshScreen() {
+    editorUpdateLinenumIndent();
+    E.screencols = E.raw_screencols - E.linenum_indent;
     editorScroll();
 
     struct abuf ab = ABUF_INIT;
@@ -1084,9 +1105,9 @@ void initEditor() {
     E.syntax = NULL;
     E.linenum_indent = 6;
 
-    if (getWindowSize(&E.screenrows, &E.screencols) == -1) die("getWindowSize");
+    if (getWindowSize(&E.screenrows, &E.raw_screencols) == -1) die("getWindowSize");
     E.screenrows -= 2;
-    E.screencols -= E.linenum_indent;
+    E.screencols -= E.raw_screencols;
 }
 
 int main(int argc, char *argv[]) {
