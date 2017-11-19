@@ -82,6 +82,7 @@ struct editorConfig {
     int rowoff;
     int screenrows;
     int screencols;
+    int raw_screenrows;
     int raw_screencols;
     int numrows;
     erow *row;
@@ -1105,9 +1106,9 @@ void initEditor() {
     E.syntax = NULL;
     E.linenum_indent = 6;
 
-    if (getWindowSize(&E.screenrows, &E.raw_screencols) == -1) die("getWindowSize");
-    E.screenrows -= 2;
-    E.screencols -= E.raw_screencols;
+    if (getWindowSize(&E.raw_screenrows, &E.raw_screencols) == -1) die("getWindowSize");
+    E.screenrows = E.raw_screenrows - 2;
+    E.screencols = E.raw_screencols;
 }
 
 int main(int argc, char *argv[]) {
