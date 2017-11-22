@@ -1,5 +1,14 @@
-* About
+* Kilo Text Editor
 
 [[https://github.com/Mastize/Kilo-Text-Editor/blob/master/editor.png]]
 
 [[http://viewsourcecode.org/snaptoken/kilo/][Build Your Own Text Editor]]
+
+* Planned Features
+- Line numbers [DONE]
+- Auto indent 
+- Text selection
+- Copy and paste
+- Modal editing
+
+
