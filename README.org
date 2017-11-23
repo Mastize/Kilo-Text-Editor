@@ -9,6 +9,6 @@
 - Copy and paste
 - Modal editing
 
-* Abort 
+* About 
 
 [[http://viewsourcecode.org/snaptoken/kilo/][Build Your Own Text Editor]]
