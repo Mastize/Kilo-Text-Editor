@@ -2,8 +2,6 @@
 
 [[https://github.com/Mastize/Kilo-Text-Editor/blob/master/editor.png]]
 
-[[http://viewsourcecode.org/snaptoken/kilo/][Build Your Own Text Editor]]
-
 * Planned Features
 - Line numbers [DONE]
 - Auto indent 
@@ -11,4 +9,6 @@
 - Copy and paste
 - Modal editing
 
+* Abort 
 
+[[http://viewsourcecode.org/snaptoken/kilo/][Build Your Own Text Editor]]
