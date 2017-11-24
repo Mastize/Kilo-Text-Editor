@@ -1058,7 +1058,6 @@ void editorProcessKeypress() {
 
     case PAGE_UP:
     case PAGE_DOWN:
-    {
         if (c == PAGE_UP) {
             E.cy = E.rowoff;
         } else if (c == PAGE_DOWN) {
@@ -1070,7 +1069,7 @@ void editorProcessKeypress() {
         while (times--) {
             editorMoveCursor(c == PAGE_UP ? ARROW_UP : ARROW_DOWN);
         }
-    }
+        break;
 
     case ARROW_LEFT:
     case ARROW_RIGHT:
